@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untuk Kamu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fcf7f8;
+      --bg-soft: #f7edef;
+      --surface: rgba(255, 255, 255, 0.78);
+      --surface-strong: rgba(255, 255, 255, 0.9);
+      --border: rgba(122, 84, 97, 0.12);
+      --text: #2c2025;
+      --muted: #6f5a63;
+      --heading: #7d3553;
+      --primary: #c45c82;
+      --primary-dark: #9d4667;
+      --primary-soft: rgba(196, 92, 130, 0.1);
+      --success-bg: #eef8f1;
+      --success-text: #2e6543;
+      --shadow-lg: 0 20px 60px rgba(126, 72, 94, 0.12);
+      --shadow-md: 0 10px 30px rgba(126, 72, 94, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --container: 980px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(234, 197, 211, 0.45), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(241, 220, 226, 0.5), transparent 30%),
+        linear-gradient(180deg, var(--bg), var(--bg-soft));
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .page { width: min(100%, var(--container)); margin: 0 auto; }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 22px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(255,255,255,0.56), rgba(255,255,255,0.16));
+      pointer-events: none;
+    }
+
+    .top, .grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .badge {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(196, 92, 130, 0.12);
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(126, 72, 94, 0.06);
+      margin-bottom: 14px;
+    }
+
+    .badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(196, 92, 130, 0.1);
+    }
+
+    .title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.1rem, 7vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--heading);
+      margin-bottom: 14px;
+    }
+
+    .intro {
+      max-width: 58ch;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .visual { display: flex; justify-content: center; }
+
+    .heart-box {
+      position: relative;
+      width: min(100%, 220px);
+      aspect-ratio: 1;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.55));
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), var(--shadow-md);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .heart-box::before,
+    .heart-box::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(228, 179, 198, 0.18);
+      filter: blur(2px);
+    }
+
+    .heart-box::before { width: 130px; height: 130px; top: -18px; right: -20px; }
+    .heart-box::after { width: 110px; height: 110px; left: -18px; bottom: -16px; }
+
+    .heart-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .heart-caption {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(125, 53, 83, 0.68);
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 999px;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+
+    .grid { gap: 16px; margin-top: 24px; }
+
+    .panel {
+      background: var(--surface-strong);
+      border: 1px solid rgba(122, 84, 97, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .panel-title::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #eab2c7, var(--primary));
+      flex: 0 0 auto;
+    }
+
+    .panel p { color: #4c3a42; line-height: 1.85; font-size: 0.98rem; }
+    .panel p + p { margin-top: 12px; }
+
+    .waiting-box {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(250,244,246,0.88));
+    }
+
+    .mini-note {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .actions {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn, .wa-link, .choice-btn {
+      appearance: none;
+      border: none;
+      outline: none;
+      text-decoration: none;
+      min-height: 48px;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font: inherit;
+      font-size: 0.96rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, opacity 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn, .wa-link { width: 100%; }
+    .btn:hover, .wa-link:hover, .choice-btn:hover { transform: translateY(-1px); }
+    .btn:active, .wa-link:active, .choice-btn:active { transform: translateY(0); }
+
+    .wa-link {
+      color: white;
+      background: linear-gradient(135deg, #28c76f, #20a958);
+      box-shadow: 0 14px 28px rgba(40, 199, 111, 0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.92);
+      color: var(--primary-dark);
+      border: 1px solid rgba(196, 92, 130, 0.14);
+      box-shadow: 0 10px 22px rgba(126, 72, 94, 0.07);
+    }
+
+    .hidden-message {
+      position: relative;
+      z-index: 1;
+      margin-top: 16px;
+      padding: 0 18px;
+      border-radius: 18px;
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 0 solid rgba(77, 143, 100, 0.12);
+      line-height: 1.75;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.28s ease, transform 0.28s ease, max-height 0.35s ease, margin-top 0.28s ease, padding 0.28s ease, border-width 0.28s ease;
+    }
+
+    .hidden-message.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      max-height: 160px;
+      padding: 16px 18px;
+      border-width: 1px;
+    }
+
+    .music-player {
+      position: relative;
+      z-index: 1;
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 28px;
+      background: #f3f3f4;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .player-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      color: #151515;
+    }
+
+    .player-top .title-mini {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .player-icon-btn {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: #111;
+      font-size: 1.15rem;
+      cursor: pointer;
+      border-radius: 999px;
+    }
+
+    .album-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 20px;
+      background: #17171b;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .album-card:disabled {
+      cursor: not-allowed;
+      opacity: 0.95;
+    }
+
+    .album-label {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.12);
+      padding: 8px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+      white-space: nowrap;
+    }
+
+    .spotify-mark {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #1ed760;
+      position: relative;
+      box-shadow: 0 10px 24px rgba(30, 215, 96, 0.22);
+    }
+
+    .spotify-mark span {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 12px;
+      border-radius: 999px;
+      background: #181818;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    .spotify-mark span:nth-child(1) {
+      width: 94px;
+      top: 44px;
+      transform: translateX(-50%) rotate(8deg);
+    }
+
+    .spotify-mark span:nth-child(2) {
+      width: 84px;
+      top: 67px;
+      transform: translateX(-50%) rotate(10deg);
+    }
+
+    .spotify-mark span:nth-child(3) {
+      width: 74px;
+      top: 90px;
+      transform: translateX(-50%) rotate(12deg);
+    }
+
+    .track-meta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .track-name {
+      font-size: 1.85rem;
+      font-weight: 500;
+      line-height: 1.05;
+      color: #141414;
+    }
+
+    .artist-name {
+      font-size: 1rem;
+      color: #4b4b4f;
+      margin-top: 4px;
+    }
+
+    .add-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid #111;
+      background: transparent;
+      color: #111;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .progress-wrap {
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: #c9c9cb;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: #111;
+      transition: width 0.1s linear;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: #57575c;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .plain-icon {
+      border: none;
+      background: transparent;
+      color: #111;
+      font-size: 1.45rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-main {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: none;
+      background: #1d1d1f;
+      color: white;
+      font-size: 1.55rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    }
+
+    .bottom-icons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      color: #111;
+      font-size: 1rem;
+    }
+
+    .bottom-icons span {
+      opacity: 0.9;
+    }
+
+    .game-section {
+      position: relative;
+      z-index: 1;
+      margin-top: 26px;
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(252,246,248,0.9));
+      border: 1px solid rgba(196, 92, 130, 0.1);
+      box-shadow: var(--shadow-md);
+    }
+
+    .game-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .game-text {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      max-width: 60ch;
+    }
+
+    .game-badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.86rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .game-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .question-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(196, 92, 130, 0.1);
+    }
+
+    .question-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #4a3840;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      justify-content: flex-start;
+      text-align: left;
+      min-height: 52px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(196, 92, 130, 0.12);
+      color: #5b434d;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(126, 72, 94, 0.05);
+    }
+
+    .choice-btn.correct {
+      background: #eef8f1;
+      border-color: rgba(70, 150, 100, 0.18);
+      color: #2d6543;
+    }
+
+    .choice-btn.wrong {
+      background: #fff3f5;
+      border-color: rgba(196, 92, 130, 0.16);
+      color: #9d4667;
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .game-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .score-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(196, 92, 130, 0.12);
+      color: var(--primary-dark);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .game-result {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(196, 92, 130, 0.1);
+      color: #4f3d45;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .game-result.show { display: block; }
+
+    .footer-note {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .footer-note span {
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    @media (min-width: 760px) {
+      body { padding: 32px; }
+      .card { padding: 34px; }
+      .top { grid-template-columns: 1.2fr 0.8fr; gap: 28px; }
+      .grid { grid-template-columns: 1.2fr 0.8fr; gap: 18px; }
+      .actions { display: flex; flex-wrap: wrap; }
+      .actions .wa-link, .actions .btn { width: auto; }
+      .heart-box { width: min(100%, 250px); }
+      .panel { padding: 22px; }
+      .intro { font-size: 1.04rem; }
+      .panel p { font-size: 1rem; }
+      .choices { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 420px) {
+      body { padding: 14px; }
+      .card { padding: 18px; border-radius: 22px; }
+      .title { font-size: 2rem; }
+      .intro, .panel p, .hidden-message, .game-text, .question-text { font-size: 0.95rem; }
+      .heart-box { width: min(100%, 190px); border-radius: 22px; }
+      .heart-caption { font-size: 0.68rem; }
+      .game-section { padding: 16px; }
+      .choice-btn { min-height: 50px; border-radius: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <div class="top">
+        <div class="copy">
+          <div class="badge">
+            <span class="dot"></span>
+            Secret Message
+          </div>
+
+          <h1 class="title">Untuk Kamu</h1>
+
+          <p class="intro">
+            Ada sesuatu yg udah lama pengen aku sampein, dengan jujur, tenang, dan sepenuh hati.
+          </p>
+        </div>
+
+        <div class="visual">
+          <div class="heart-box" aria-hidden="true">
+            <canvas id="heartCanvas" class="heart-canvas"></canvas>
+            <div class="heart-caption">pelan2, tapi pasti</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="panel">
+          <div class="panel-title">Isi Dompetku</div>
+          <p>
+            Aku nyaman pas dekat sama kamu, seneng pas ngobrol sama kamu,
+            dan semakin lama aku sadar kalau perasaanku ke kamu lebih dari biasa.
+          </p>
+          <p>
+            Aku cinta sama kamu. Aku gk mau maksa kamu jawab sekarang,
+            karena aku tau perasaan itu butuh waktu untuk dipikirin dengan tenang.
+          </p>
+        </section>
+
+        <section class="panel waiting-box">
+          <div>
+            <div class="panel-title">Pelan2 aja ya</div>
+            <p>
+              Gk apa2 kalau kamu butuh waktu buat nenangin diri dulu. Ambil waktu yang kamu perlu.
+              Nanti kalau kamu udah lebih tenang, kabarin aku ya.
+              oiya nanti aku telepon ya sekitar jam 12 ke atas, kamu nenangin diri aja dulu
+            </p>
+          </div>
+
+          <div class="mini-note">Aku tunggu kabar dari kamu 🙂</div>
+        </section>
+      </div>
+
+      <section class="music-player" aria-labelledby="playerTitle">
+        <div class="player-top">
+          <button class="player-icon-btn" type="button" aria-label="Kembali">⌄</button>
+          <div class="title-mini" id="playerTitle">Song</div>
+          <button class="player-icon-btn" type="button" aria-label="Menu">⋯</button>
+        </div>
+
+        <button class="album-card" id="playMusicBtn" type="button" aria-label="Putar lagu">
+          <div class="spotify-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="album-label" id="albumLabel">Klik untuk memutar</div>
+        </button>
+
+        <div class="track-meta">
+          <div>
+            <div class="track-name">Just The Way You Are</div>
+            <div class="artist-name">Bruno Mars</div>
+          </div>
+          <button class="add-btn" type="button" aria-label="Tambah">+</button>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress" id="audioProgress"></div>
+          </div>
+          <div class="time-row">
+            <span id="currentTime">0:00</span>
+            <span id="durationTime">0:00</span>
+          </div>
+        </div>
+
+        <div class="controls-row">
+          <button class="plain-icon" type="button" aria-label="Efek">✧</button>
+          <button class="plain-icon" id="prevBtn" type="button" aria-label="Sebelumnya">⏮</button>
+          <button class="play-main" id="playPauseBtn" type="button" aria-label="Putar atau jeda">▶</button>
+          <button class="plain-icon" id="nextBtn" type="button" aria-label="Berikutnya">⏭</button>
+          <button class="plain-icon" type="button" aria-label="Timer">⏱</button>
+        </div>
+
+        <div class="bottom-icons">
+          <span>⧉</span>
+          <span>⤴</span>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="wa-link" href="https://wa.me/6285211643326" target="_blank" rel="noopener noreferrer">
+          Hubungi aku di WhatsApp
+        </a>
+
+        <button class="btn btn-secondary" id="showMessageBtn" type="button">
+          Lihat info tambahan
+        </button>
+      </div>
+
+      <div class="hidden-message" id="supportMessage" aria-live="polite">
+        Oh ya, besok aku berangkat dari sini jam 6:30 pagi ya.
+      </div>
+
+      <audio id="loveSong" preload="auto">
+        <source src="music.mp3" type="audio/mpeg" />
+        Browser kamu belum mendukung audio.
+      </audio>
+
+      <section class="game-section" aria-labelledby="gameTitle">
+        <div class="game-head">
+          <div>
+            <div class="panel-title" id="gameTitle">Mini Game Lucu</div>
+            <p class="game-text">
+              Biar gk tegang, coba main game kecil ini dulu. Tebak jawaban yang paling manis. gk ada yang susah kok 🙂
+            </p>
+          </div>
+          <div class="game-badge">Tebak yang paling aku pilih</div>
+        </div>
+
+        <div class="game-card">
+          <div class="question-box">
+            <div class="question-label">Pertanyaan</div>
+            <div class="question-text" id="questionText"></div>
+          </div>
+
+          <div class="choices" id="choices"></div>
+
+          <div class="game-footer">
+            <div class="score-pill" id="scoreText">Skor: 0 / 0</div>
+            <button class="btn btn-secondary" id="nextQuestionBtn" type="button">Soal berikutnya</button>
+          </div>
+
+          <div class="game-result" id="gameResult" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="game-section" id="photoSection" aria-labelledby="photoTitle" style="display:none; margin-top:26px;">
+        <div class="game-head">
+          <div>
+            <div class="panel-title" id="photoTitle">Halaman Foto</div>
+            <p class="game-text">
+              This Is How Beautiful You Are.
+            </p>
+          </div>
+          <div class="game-badge">This Is You</div>
+        </div>
+
+        <div class="question-box" style="padding:12px; overflow:hidden;">
+          <img
+            src="foto.png"
+            alt="Foto spesial"
+            style="width:100%; display:block; border-radius:18px; object-fit:cover; max-height:520px;"
+          />
+        </div>
+      </section>
+
+      <div class="footer-note">
+        Dibuat dengan <span>perasaan gk tau</span> dan minigame simpel.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const supportMessage = document.getElementById("supportMessage");
+    const playMusicBtn = document.getElementById("playMusicBtn");
+    const albumLabel = document.getElementById("albumLabel");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const loveSong = document.getElementById("loveSong");
+    const photoSection = document.getElementById("photoSection");
+    const audioProgress = document.getElementById("audioProgress");
+    const currentTimeEl = document.getElementById("currentTime");
+    const durationTimeEl = document.getElementById("durationTime");
+    const showMessageBtn = document.getElementById("showMessageBtn");
+
+    showMessageBtn.addEventListener("click", () => {
+      const isShown = supportMessage.classList.contains("show");
+      supportMessage.classList.toggle("show");
+      showMessageBtn.textContent = isShown ? "Lihat info tambahan" : "Sembunyikan info";
+    });
+
+    function formatTime(value) {
+      if (!Number.isFinite(value)) return "0:00";
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value % 60).toString().padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+
+    async function startSong() {
+      try {
+        await loveSong.play();
+      } catch (error) {
+        alert("File music.mp3 belum ada atau browser memblokir audio. Simpan music.mp3 di folder yang sama.");
+      }
+    }
+
+    function toggleSong() {
+      if (loveSong.paused) {
+        startSong();
+      } else {
+        loveSong.pause();
+      }
+    }
+
+    playMusicBtn.addEventListener("click", startSong);
+    playPauseBtn.addEventListener("click", toggleSong);
+
+    prevBtn.addEventListener("click", () => {
+      loveSong.currentTime = Math.max(0, loveSong.currentTime - 10);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const nextTime = loveSong.currentTime + 10;
+      loveSong.currentTime = Math.min(loveSong.duration || nextTime, nextTime);
+    });
+
+    loveSong.addEventListener("loadedmetadata", () => {
+      durationTimeEl.textContent = formatTime(loveSong.duration);
+    });
+
+    loveSong.addEventListener("timeupdate", () => {
+      currentTimeEl.textContent = formatTime(loveSong.currentTime);
+      if (loveSong.duration) {
+        audioProgress.style.width = `${(loveSong.currentTime / loveSong.duration) * 100}%`;
+      }
+    });
+
+    loveSong.addEventListener("play", () => {
+      photoSection.style.display = "block";
+      photoSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      playPauseBtn.textContent = "❚❚";
+      albumLabel.textContent = "Lagu sedang diputar";
+      playMusicBtn.disabled = true;
+    });
+
+    loveSong.addEventListener("pause", () => {
+      playPauseBtn.textContent = "▶";
+      if (!loveSong.ended) {
+        albumLabel.textContent = "Klik untuk lanjutkan";
+        playMusicBtn.disabled = false;
+      }
+    });
+
+    loveSong.addEventListener("ended", () => {
+      playPauseBtn.textContent = "▶";
+      audioProgress.style.width = "0%";
+      currentTimeEl.textContent = "0:00";
+      albumLabel.textContent = "Putar lagi";
+      playMusicBtn.disabled = false;
+    });
+
+    const canvas = document.getElementById("heartCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let w = 0;
+    let h = 0;
+    let raf = null;
+    let time = 0;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      w = rect.width;
+      h = rect.height;
+      canvas.width = w * ratio;
+      canvas.height = h * ratio;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      createParticles();
+    }
+
+    function heartPoint(t, scale) {
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      return { x: x * scale, y: y * scale };
+    }
+
+    function createParticles() {
+      particles = [];
+      const count = window.innerWidth < 480 ? 90 : 120;
+      const scale = Math.min(w, h) * 0.05;
+      const cx = w / 2;
+      const cy = h / 2 - 4;
+
+      for (let i = 0; i < count; i++) {
+        const t = (Math.PI * 2 * i) / count;
+        const target = heartPoint(t, scale);
+        const spread = Math.min(w, h) * 0.3;
+
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          tx: cx + target.x,
+          ty: cy + target.y,
+          size: Math.random() * 1.8 + 1.2,
+          alpha: Math.random() * 0.35 + 0.35,
+          delay: Math.random() * 80,
+          orbit: Math.random() * 0.7 + 0.3,
+          seedX: (Math.random() - 0.5) * spread,
+          seedY: (Math.random() - 0.5) * spread
+        });
+      }
+    }
+
+    function draw() {
+      time += 1;
+      ctx.clearRect(0, 0, w, h);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        const progress = Math.max(0, Math.min(1, (time - p.delay) / 100));
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const startX = w / 2 + p.seedX;
+        const startY = h / 2 + p.seedY;
+        const floatX = Math.sin((time + i * 4) * 0.02) * p.orbit;
+        const floatY = Math.cos((time + i * 3) * 0.02) * p.orbit;
+
+        p.x = startX + (p.tx - startX) * ease + floatX;
+        p.y = startY + (p.ty - startY) * ease + floatY;
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(196, 92, 130, ${p.alpha})`;
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      raf = requestAnimationFrame(draw);
+    }
+
+    resizeCanvas();
+    draw();
+
+    window.addEventListener("resize", () => {
+      cancelAnimationFrame(raf);
+      time = 0;
+      resizeCanvas();
+      draw();
+    });
+
+    const questions = [
+      {
+        question: "Kalau aku lagi kangen kamu, biasanya yang paling pengen aku lakuin apa?",
+        choices: ["Ngilang 3 hari", "Ngajak ngobrol", "Pura-pura cuek", "Tidur 12 jam"],
+        answer: 1,
+        message: "Iya, jawabannya ngajak ngobrol. Soalnya ngobrol sama kamu selalu bikin hariku lebih enak."
+      },
+      {
+        question: "Menurut aku, hal kecil yang paling manis dari kamu itu apa?",
+        choices: ["Cara ngomel", "Cara merajok", "Cara marah", "Cara ngilang pas ditanya"],
+        answer: 1,
+        message: "Bener. Cara merajok kamu punya efek samping: bikin aku stress."
+      },
+      {
+        question: "Kalau ada tombol 'ulang momen enak', aku paling pengen pakai buat apa?",
+        choices: ["Ngulang obrolan sama kamu", "Ngulang macet", "Ngulang salah paham", "Ngulang tugas numpuk"],
+        answer: 0,
+        message: "Yaps, ngulang obrolan sama kamu. Karena hal sederhana aja bisa jadi berkesan kalau sama kamu."
+      },
+      {
+        question: "Kalau game ini tamat, hadiah kecilnya apa?",
+        choices: ["Piala dunia", "Es teh gratis", "Senyum dari aku", "Printer baru"],
+        answer: 2,
+        message: "Betul, hadiahnya senyum dari aku. Walau virtual, tetap tulus kok 🙂"
+      }
+    ];
+
+    const questionText = document.getElementById("questionText");
+    const choicesEl = document.getElementById("choices");
+    const scoreText = document.getElementById("scoreText");
+    const resultEl = document.getElementById("gameResult");
+    const nextQuestionBtn = document.getElementById("nextQuestionBtn");
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function updateScore() {
+      scoreText.textContent = `Skor: ${score} / ${questions.length}`;
+    }
+
+    function renderQuestion() {
+      const item = questions[currentQuestion];
+      answered = false;
+      resultEl.classList.remove("show");
+      resultEl.textContent = "";
+      questionText.textContent = item.question;
+      choicesEl.innerHTML = "";
+
+      item.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.className = "choice-btn";
+        button.type = "button";
+        button.textContent = choice;
+        button.addEventListener("click", () => chooseAnswer(index, button));
+        choicesEl.appendChild(button);
+      });
+
+      nextQuestionBtn.textContent = currentQuestion === questions.length - 1 ? "Lihat hasil akhir" : "Soal berikutnya";
+      updateScore();
+    }
+
+    function chooseAnswer(index, button) {
+      if (answered) return;
+      answered = true;
+
+      const item = questions[currentQuestion];
+      const buttons = Array.from(document.querySelectorAll(".choice-btn"));
+
+      buttons.forEach((btn, btnIndex) => {
+        btn.disabled = true;
+        if (btnIndex === item.answer) btn.classList.add("correct");
+      });
+
+      if (index === item.answer) {
+        score += 1;
+        button.classList.add("correct");
+        resultEl.textContent = `Yeay, benar. ${item.message}`;
+      } else {
+        button.classList.add("wrong");
+        resultEl.textContent = `Hampir benar 😄 ${item.message}`;
+      }
+
+      resultEl.classList.add("show");
+      updateScore();
+    }
+
+    nextQuestionBtn.addEventListener("click", () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion += 1;
+        renderQuestion();
+        return;
+      }
+
+      const finalMessages = [
+        "Lucu ya, ternyata hal-hal kecil pun bisa terasa spesial kalau melibatkan kamu.",
+        "Terima kasih sudah main sampai akhir. Semoga senyum kamu nambah satu gara-gara ini.",
+        "Apa pun skornya, kamu tetap menang di bagian bikin hari jadi lebih hangat."
+      ];
+
+      questionText.textContent = "Mini gamenya selesai ✨";
+      choicesEl.innerHTML = "";
+      resultEl.classList.add("show");
+      resultEl.innerHTML = `Skor akhir kamu <strong>${score}/${questions.length}</strong>.<br><br>${finalMessages.join(" ")}`;
+      nextQuestionBtn.textContent = "Main lagi";
+      nextQuestionBtn.onclick = () => {
+        currentQuestion = 0;
+        score = 0;
+        nextQuestionBtn.onclick = null;
+        renderQuestion();
+      };
+      updateScore();
+    });
+
+    renderQuestion();
+  </script>
+</body>
+</html>
